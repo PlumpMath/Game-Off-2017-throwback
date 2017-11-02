@@ -5,7 +5,7 @@ function love.load()
 	VW = love.graphics.getWidth()
 	VH = love.graphics.getHeight()
 	VH2 = 0.5 * VH
-	roadWidthNear = VW * 0.9
+	roadWidthNear = VW * 0.96
 	roadWidthFar = roadWidthNear * 0.2
 end
 
