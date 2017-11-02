@@ -1,9 +1,11 @@
 local VW, VH, VH2
+local roadWidth
 
 function love.load()
 	VW = love.graphics.getWidth()
 	VH = love.graphics.getHeight()
 	VH2 = 0.5 * VH
+	roadWidth = VW * 0.9
 end
 
 function love.draw()
@@ -11,4 +13,15 @@ function love.draw()
 	love.graphics.rectangle('fill', 0, 0, VW, VH2)
 	love.graphics.setColor(0, 153, 51)
 	love.graphics.rectangle('fill', 0, VH2, VW, VH2)
+	drawSegment(0)
+end
+
+function drawSegment(z)
+	love.graphics.setColor(96, 96, 96)
+	love.graphics.polygon('fill',
+		0.5 * (VW - roadWidth), VH,
+		0.5 * (VW - roadWidth * 0.2), VH2,
+		0.5 * (VW - roadWidth * 0.2) + (roadWidth * 0.2), VH2,
+		0.5 * (VW - roadWidth) + roadWidth, VH
+	)
 end
