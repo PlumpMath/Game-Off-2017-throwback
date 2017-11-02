@@ -10,19 +10,21 @@ function love.load()
 end
 
 function love.draw()
+	love.graphics.scale(1, -1)
+	love.graphics.translate(0, -VH)
 	love.graphics.setColor(102, 153, 255)
-	love.graphics.rectangle('fill', 0, 0, VW, VH2)
-	love.graphics.setColor(0, 153, 51)
 	love.graphics.rectangle('fill', 0, VH2, VW, VH2)
+	love.graphics.setColor(0, 153, 51)
+	love.graphics.rectangle('fill', 0, 0, VW, VH2)
 	drawSegment(0)
 end
 
 function drawSegment(z)
 	love.graphics.setColor(96, 96, 96)
 	love.graphics.polygon('fill',
-		0.5 * (VW - roadWidthNear), VH,
+		0.5 * (VW - roadWidthNear), 0,
 		0.5 * (VW - roadWidthFar), VH2,
 		0.5 * (VW - roadWidthFar) + roadWidthFar, VH2,
-		0.5 * (VW - roadWidthNear) + roadWidthNear, VH
+		0.5 * (VW - roadWidthNear) + roadWidthNear, 0
 	)
 end
