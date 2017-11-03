@@ -32,28 +32,27 @@ function love.draw()
 end
 
 function mapCoord(x, y, z)
-	z = z - pos
 	return x * 1 / (z + 1), (VH2 - y) * z / (z + 1)
 end
 
+function segmentColor(n)
+	if n % 2 == 0 then
+		return 96, 96, 96
+	else
+		return 105, 105, 105
+	end
+end
+
 function drawSegment(z)
-	for n = 0, 100, 2 do
-		love.graphics.setColor(96, 96, 96)
-		local x1, y1 = mapCoord(-400, 0, n)
-		local x2, y2 = mapCoord(-400, 0, n + 1)
-		local x3, y3 = mapCoord( 400, 0, n + 1)
-		local x4, y4 = mapCoord( 400, 0, n)
-		love.graphics.polygon('fill',
-			x1, y1,
-			x2, y2,
-			x3, y3,
-			x4, y4
-		)
-		love.graphics.setColor(105, 105, 105)
-		local x1, y1 = mapCoord(-400, 0, n + 1)
-		local x2, y2 = mapCoord(-400, 0, n + 2)
-		local x3, y3 = mapCoord( 400, 0, n + 2)
-		local x4, y4 = mapCoord( 400, 0, n + 1)
+	local di = math.floor(pos)
+	local ibegin = di
+	local iend = 100 + di
+	for n = ibegin, iend, 1 do
+		love.graphics.setColor(segmentColor(n))
+		local x1, y1 = mapCoord(-400, 0, n - pos)
+		local x2, y2 = mapCoord(-400, 0, n + 1 - pos)
+		local x3, y3 = mapCoord( 400, 0, n + 1 - pos)
+		local x4, y4 = mapCoord( 400, 0, n - pos)
 		love.graphics.polygon('fill',
 			x1, y1,
 			x2, y2,
