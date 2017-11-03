@@ -1,13 +1,10 @@
 local VW, VW2, VH, VH2
-local roadWidthNear, roadWidthFar
 
 function love.load()
 	VW = love.graphics.getWidth()
 	VH = love.graphics.getHeight()
 	VW2 = 0.5 * VW
 	VH2 = 0.5 * VH
-	roadWidthNear = VW * 0.96
-	roadWidthFar = roadWidthNear * 0.2
 end
 
 function love.draw()
@@ -20,12 +17,33 @@ function love.draw()
 	drawSegment(0)
 end
 
+function mapCoord(x, y, z)
+	return x * 1 / (z + 1), (VH2 - y) * z / (z + 1)
+end
+
 function drawSegment(z)
-	love.graphics.setColor(96, 96, 96)
-	love.graphics.polygon('fill',
-		-0.5 * roadWidthNear, 0,
-		-0.5 * roadWidthFar, VH2,
-		 0.5 * roadWidthFar, VH2,
-		 0.5 * roadWidthNear, 0
-	)
+	for n = 0, 100, 2 do
+		love.graphics.setColor(96, 96, 96)
+		local x1, y1 = mapCoord(-400, 0, n)
+		local x2, y2 = mapCoord(-400, 0, n + 1)
+		local x3, y3 = mapCoord( 400, 0, n + 1)
+		local x4, y4 = mapCoord( 400, 0, n)
+		love.graphics.polygon('fill',
+			x1, y1,
+			x2, y2,
+			x3, y3,
+			x4, y4
+		)
+		love.graphics.setColor(105, 105, 105)
+		local x1, y1 = mapCoord(-400, 0, n + 1)
+		local x2, y2 = mapCoord(-400, 0, n + 2)
+		local x3, y3 = mapCoord( 400, 0, n + 2)
+		local x4, y4 = mapCoord( 400, 0, n + 1)
+		love.graphics.polygon('fill',
+			x1, y1,
+			x2, y2,
+			x3, y3,
+			x4, y4
+		)
+	end
 end
