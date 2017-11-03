@@ -26,7 +26,7 @@ function love.draw()
 	love.graphics.translate(VW2, -VH)
 	local di = math.floor(pos)
 	local ibegin = di
-	local iend = 100 + di
+	local iend = 40 + di
 	local y1, y2
 	for n = ibegin, iend, 1 do
 		y1, y2 = drawSegment(n)
