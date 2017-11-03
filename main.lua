@@ -1,10 +1,24 @@
 local VW, VW2, VH, VH2
+local pos, speed
 
 function love.load()
 	VW = love.graphics.getWidth()
 	VH = love.graphics.getHeight()
 	VW2 = 0.5 * VW
 	VH2 = 0.5 * VH
+	pos = 0
+	speed = 0
+end
+
+function love.update(dt)
+	local acc = 0
+	if love.keyboard.isDown('up') then
+		acc = 1
+	elseif love.keyboard.isDown('down') then
+		acc = -1
+	end
+	speed = speed + acc * dt
+	pos = pos + speed * dt
 end
 
 function love.draw()
@@ -18,6 +32,7 @@ function love.draw()
 end
 
 function mapCoord(x, y, z)
+	z = z - pos
 	return x * 1 / (z + 1), (VH2 - y) * z / (z + 1)
 end
 
