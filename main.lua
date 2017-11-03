@@ -32,7 +32,7 @@ function love.draw()
 		y1, y2 = drawSegment(n)
 	end
 	love.graphics.setColor(102, 153, 255)
-	love.graphics.rectangle('fill', -VW2, y1, VW, y2)
+	love.graphics.rectangle('fill', -VW2, y1, VW, VH - y2)
 end
 
 function mapCoord(x, y, z)
