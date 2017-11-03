@@ -24,14 +24,15 @@ end
 function love.draw()
 	love.graphics.scale(1, -1)
 	love.graphics.translate(VW2, -VH)
-	love.graphics.setColor(102, 153, 255)
-	love.graphics.rectangle('fill', -VW2, VH2, VW, VH2)
 	local di = math.floor(pos)
 	local ibegin = di
 	local iend = 100 + di
+	local y1, y2
 	for n = ibegin, iend, 1 do
-		drawSegment(n)
+		y1, y2 = drawSegment(n)
 	end
+	love.graphics.setColor(102, 153, 255)
+	love.graphics.rectangle('fill', -VW2, y1, VW, y2)
 end
 
 function mapCoord(x, y, z)
@@ -79,4 +80,5 @@ function drawSegment(n)
 		VW2, y3,
 		VW2, y4
 	)
+	return y3, y4
 end
