@@ -64,7 +64,7 @@ function getSegment(n)
 end
 
 function drawSegment(n, offx)
-	local W = 400
+	local W = 500
 	local sx, sy, sz = getSegment(n)
 	local zx, zy, zz = getSegment(n + 1)
 	local x1, y1 = mapCoord(sx - W - offx, sy, sz)
