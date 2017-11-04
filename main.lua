@@ -28,8 +28,9 @@ function love.draw()
 	local ibegin = di
 	local iend = 40 + di
 	local y1, y2
+	local offx = getSegment(pos)
 	for n = ibegin, iend, 1 do
-		y1, y2 = drawSegment(n)
+		y1, y2 = drawSegment(n, offx)
 	end
 	love.graphics.setColor(102, 153, 255)
 	love.graphics.rectangle('fill', -VW2, y1, VW, VH - y2)
@@ -55,11 +56,21 @@ function grassColor(n)
 	end
 end
 
-function drawSegment(n)
-	local x1, y1 = mapCoord(-400, 0, n - pos)
-	local x2, y2 = mapCoord(-400, 0, n + 1 - pos)
-	local x3, y3 = mapCoord( 400, 0, n + 1 - pos)
-	local x4, y4 = mapCoord( 400, 0, n - pos)
+function getSegment(n)
+	local x = math.sin(n / 5.0) * 900
+	local y = 0
+	local z = n - pos
+	return x, y, z
+end
+
+function drawSegment(n, offx)
+	local W = 400
+	local sx, sy, sz = getSegment(n)
+	local zx, zy, zz = getSegment(n + 1)
+	local x1, y1 = mapCoord(sx - W - offx, sy, sz)
+	local x2, y2 = mapCoord(zx - W - offx, zy, zz)
+	local x3, y3 = mapCoord(zx + W - offx, zy, zz)
+	local x4, y4 = mapCoord(sx + W - offx, sy, sz)
 	love.graphics.setColor(segmentColor(n))
 	love.graphics.polygon('fill',
 		x1, y1,
