@@ -91,8 +91,8 @@ function getSegment(n)
 		x = level[2 * n - 1]
 		y = level[2 * n]
 	else
-		x = 0
-		y = 0
+		x = level[2 * levelLength - 1]
+		y = level[2 * levelLength]
 	end
 	z = n - carZ
 	return x, y, z
