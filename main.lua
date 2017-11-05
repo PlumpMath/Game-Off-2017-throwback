@@ -1,17 +1,23 @@
 local VW, VW2, VH, VH2
 local carZ, carX, speed
+local level, levelLength
 
-function love.load()
+function love.load(p)
 	VW = love.graphics.getWidth()
 	VH = love.graphics.getHeight()
 	VW2 = 0.5 * VW
 	VH2 = 0.5 * VH
 	carX = 0
-	carZ = 0
+	carZ = 1
 	speed = 0
+	level = require('level1')
+	levelLength = table.getn(level) / 2
 end
 
 function love.update(dt)
+	if carZ >= levelLength then
+		return
+	end
 	local acc = 0
 	local steer = 0
 	local steerMax = 1000
@@ -66,9 +72,15 @@ function grassColor(n)
 end
 
 function getSegment(n)
-	local x = math.sin(n / 5.0) * 900
-	local y = 0
-	local z = n - carZ
+	local x, y, z
+	if n < levelLength then
+		x = level[2 * n - 1]
+		y = level[2 * n]
+	else
+		x = 0
+		y = 0
+	end
+	z = n - carZ
 	return x, y, z
 end
 
