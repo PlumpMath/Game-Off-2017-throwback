@@ -10,7 +10,7 @@ function love.load(p)
 	carX = 0
 	carZ = 1
 	speed = 0
-	level = require('level1')
+	level = loadLevel('level1')
 	levelLength = table.getn(level) / 2
 end
 
@@ -49,6 +49,20 @@ function love.draw()
 	end
 	love.graphics.setColor(102, 153, 255)
 	love.graphics.rectangle('fill', -VW2, y1, VW, VH - y2)
+end
+
+function loadLevel(name)
+	local t = require(name)
+	local l = {}
+	local x = 0
+	local y = 0
+	for n = 1, table.getn(t), 2 do
+		x = x + t[n]
+		y = y + t[n + 1]
+		l[n] = x
+		l[n + 1] = y
+	end
+	return l
 end
 
 function mapCoord(x, y, z)
