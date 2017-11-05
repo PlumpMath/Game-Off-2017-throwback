@@ -26,7 +26,7 @@ function love.update(dt)
 	if love.keyboard.isDown('right') then
 		steer = steerMax
 	end
-	speed = speed + acc * dt
+	speed = math.max(speed + acc * dt, 0)
 	carX = carX + steer * dt
 	carZ = carZ + speed * dt
 end
