@@ -1,36 +1,45 @@
 local VW, VW2, VH, VH2
-local pos, speed
+local carZ, carX, speed
 
 function love.load()
 	VW = love.graphics.getWidth()
 	VH = love.graphics.getHeight()
 	VW2 = 0.5 * VW
 	VH2 = 0.5 * VH
-	pos = 0
+	carX = 0
+	carZ = 0
 	speed = 0
 end
 
 function love.update(dt)
 	local acc = 0
+	local steer = 0
+	local steerMax = 1000
 	if love.keyboard.isDown('up') then
 		acc = 1
 	elseif love.keyboard.isDown('down') then
 		acc = -1
 	end
+	if love.keyboard.isDown('left') then
+		steer = -steerMax
+	end
+	if love.keyboard.isDown('right') then
+		steer = steerMax
+	end
 	speed = speed + acc * dt
-	pos = pos + speed * dt
+	carX = carX + steer * dt
+	carZ = carZ + speed * dt
 end
 
 function love.draw()
 	love.graphics.scale(1, -1)
 	love.graphics.translate(VW2, -VH)
-	local di = math.floor(pos)
+	local di = math.floor(carZ)
 	local ibegin = di
 	local iend = 40 + di
 	local y1, y2
-	local offx = getSegment(pos)
 	for n = ibegin, iend, 1 do
-		y1, y2 = drawSegment(n, offx)
+		y1, y2 = drawSegment(n, carX)
 	end
 	love.graphics.setColor(102, 153, 255)
 	love.graphics.rectangle('fill', -VW2, y1, VW, VH - y2)
@@ -59,7 +68,7 @@ end
 function getSegment(n)
 	local x = math.sin(n / 5.0) * 900
 	local y = 0
-	local z = n - pos
+	local z = n - carZ
 	return x, y, z
 end
 
