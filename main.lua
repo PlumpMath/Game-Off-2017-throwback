@@ -45,7 +45,7 @@ function love.draw()
 	local iend = 40 + di
 	local y1, y2
 	for n = ibegin, iend, 1 do
-		y1, y2 = drawSegment(n, carX)
+		y1, y2 = drawSegment(n)
 	end
 	love.graphics.setColor(102, 153, 255)
 	love.graphics.rectangle('fill', -VW2, y1, VW, VH - y2)
@@ -98,14 +98,14 @@ function getSegment(n)
 	return x, y, z
 end
 
-function drawSegment(n, offx)
+function drawSegment(n)
 	local W = 500
 	local sx, sy, sz = getSegment(n)
 	local zx, zy, zz = getSegment(n + 1)
-	local x1, y1 = mapCoord(sx - W - offx, sy, sz)
-	local x2, y2 = mapCoord(zx - W - offx, zy, zz)
-	local x3, y3 = mapCoord(zx + W - offx, zy, zz)
-	local x4, y4 = mapCoord(sx + W - offx, sy, sz)
+	local x1, y1 = mapCoord(sx - W - carX, sy, sz)
+	local x2, y2 = mapCoord(zx - W - carX, zy, zz)
+	local x3, y3 = mapCoord(zx + W - carX, zy, zz)
+	local x4, y4 = mapCoord(sx + W - carX, sy, sz)
 	love.graphics.setColor(segmentColor(n))
 	love.graphics.polygon('fill',
 		x1, y1,
