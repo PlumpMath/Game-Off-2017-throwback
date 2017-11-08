@@ -1,6 +1,7 @@
 local VW, VW2, VH, VH2
 local carZ, carX, speed
 local level, levelLength
+local dx
 
 function love.load(p)
 	VW = love.graphics.getWidth()
@@ -10,6 +11,7 @@ function love.load(p)
 	carX = 0
 	carZ = 1
 	speed = 0
+	dx = 0
 	level = loadLevel('level1')
 	levelLength = table.getn(level) / 2
 end
@@ -44,6 +46,10 @@ function love.draw()
 	local ibegin = di
 	local iend = 40 + di
 	local y1, y2
+	local sx0 = getSegment(di)
+	local sx1 = getSegment(di + 1)
+	local _, f = math.modf(carZ)
+	dx = mix(sx0, sx1, f)
 	for n = ibegin, iend, 1 do
 		y1, y2 = drawSegment(n)
 	end
@@ -51,18 +57,12 @@ function love.draw()
 	love.graphics.rectangle('fill', -VW2, y1, VW, VH - y2)
 end
 
+function mix(a, b, f)
+	return a * (1 - f) + b * f
+end
+
 function loadLevel(name)
-	local t = require(name)
-	local l = {}
-	local x = 0
-	local y = 0
-	for n = 1, table.getn(t), 2 do
-		x = x + t[n]
-		y = y + t[n + 1]
-		l[n] = x
-		l[n + 1] = y
-	end
-	return l
+	return require(name)
 end
 
 function mapCoord(x, y, z)
@@ -102,27 +102,29 @@ function drawSegment(n)
 	local W = 500
 	local sx, sy, sz = getSegment(n)
 	local zx, zy, zz = getSegment(n + 1)
+	local dsx = (n - carZ) * dx
+	local dzx = (n + 1 - carZ) * dx
 	local x1, y1 = mapCoord(sx - W - carX, sy, sz)
 	local x2, y2 = mapCoord(zx - W - carX, zy, zz)
 	local x3, y3 = mapCoord(zx + W - carX, zy, zz)
 	local x4, y4 = mapCoord(sx + W - carX, sy, sz)
 	love.graphics.setColor(segmentColor(n))
 	love.graphics.polygon('fill',
-		x1, y1,
-		x2, y2,
-		x3, y3,
-		x4, y4
+		x1 + dsx, y1,
+		x2 + dzx, y2,
+		x3 + dzx, y3,
+		x4 + dsx, y4
 	)
 	love.graphics.setColor(grassColor(n))
 	love.graphics.polygon('fill',
-		 x1, y1,
-		 x2, y2,
+		 x1 + dsx, y1,
+		 x2 + dzx, y2,
 		-VW2, y2,
 		-VW2, y1
 	)
 	love.graphics.polygon('fill',
-		x4, y4,
-		x3, y3,
+		x4 + dsx, y4,
+		x3 + dzx, y3,
 		VW2, y3,
 		VW2, y4
 	)
