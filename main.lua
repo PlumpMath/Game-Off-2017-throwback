@@ -49,12 +49,16 @@ function love.draw()
 	local sx0 = getSegment(di)
 	local sx1 = getSegment(di + 1)
 	local _, f = math.modf(carZ)
-	dx = mix(sx0, sx1, f)
+	dx = mix(sx0, sx1, smooth(f))
 	for n = ibegin, iend, 1 do
 		y1, y2 = drawSegment(n)
 	end
 	love.graphics.setColor(102, 153, 255)
 	love.graphics.rectangle('fill', -VW2, y1, VW, VH - y2)
+end
+
+function smooth(a)
+	return a * a * (3 - 2 * a)
 end
 
 function mix(a, b, f)
