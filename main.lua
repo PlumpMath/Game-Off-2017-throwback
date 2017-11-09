@@ -22,6 +22,7 @@ function love.update(dt)
 	end
 	local acc = 0
 	local steer = 0
+	local speedMax = 15
 	local steerMax = 1000
 	if love.keyboard.isDown('up') then
 		acc = 1
@@ -34,7 +35,7 @@ function love.update(dt)
 	if love.keyboard.isDown('right') then
 		steer = steerMax
 	end
-	speed = math.max(speed + acc * dt, 0)
+	speed = clamp(speed + acc * dt, 0, speedMax)
 	local offset = dt * speed * dx * dx
 	carX = carX + steer * dt - offset
 	carZ = carZ + speed * dt
@@ -64,6 +65,10 @@ end
 
 function mix(a, b, f)
 	return a * (1 - f) + b * f
+end
+
+function clamp(x, a, b)
+	return math.min(math.max(x, a), b)
 end
 
 function loadLevel(name)
