@@ -36,6 +36,9 @@ function love.update(dt)
 	if love.keyboard.isDown('right') then
 		steer = steerMax
 	end
+	if math.abs(carX) >= roadSize then
+		acc = acc - smooth(speed / speedMax) * 2
+	end
 	speed = clamp(speed + acc * dt, 0, speedMax)
 	local speedPercent = speed / speedMax
 	local offset = dt * speed * dx * dx
