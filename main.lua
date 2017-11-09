@@ -36,8 +36,9 @@ function love.update(dt)
 		steer = steerMax
 	end
 	speed = clamp(speed + acc * dt, 0, speedMax)
+	local speedPercent = speed / speedMax
 	local offset = dt * speed * dx * dx
-	carX = carX + steer * dt - offset
+	carX = carX + steer * speedPercent * dt - offset
 	carZ = carZ + speed * dt
 end
 
