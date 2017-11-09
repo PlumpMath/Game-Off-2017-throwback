@@ -35,7 +35,8 @@ function love.update(dt)
 		steer = steerMax
 	end
 	speed = math.max(speed + acc * dt, 0)
-	carX = carX + steer * dt
+	local offset = dt * speed * dx * dx
+	carX = carX + steer * dt - offset
 	carZ = carZ + speed * dt
 end
 
