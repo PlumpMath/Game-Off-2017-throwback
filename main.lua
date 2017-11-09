@@ -2,6 +2,7 @@ local VW, VW2, VH, VH2
 local carZ, carX, speed
 local level, levelLength
 local dx
+local roadSize = 500
 
 function love.load(p)
 	VW = love.graphics.getWidth()
@@ -110,15 +111,14 @@ function getSegment(n)
 end
 
 function drawSegment(n)
-	local W = 500
 	local sx, sy, sz = getSegment(n)
 	local zx, zy, zz = getSegment(n + 1)
 	local dsx = (n - carZ) * dx
 	local dzx = (n + 1 - carZ) * dx
-	local x1, y1 = mapCoord(sx - W - carX, sy, sz)
-	local x2, y2 = mapCoord(zx - W - carX, zy, zz)
-	local x3, y3 = mapCoord(zx + W - carX, zy, zz)
-	local x4, y4 = mapCoord(sx + W - carX, sy, sz)
+	local x1, y1 = mapCoord(sx - roadSize - carX, sy, sz)
+	local x2, y2 = mapCoord(zx - roadSize - carX, zy, zz)
+	local x3, y3 = mapCoord(zx + roadSize - carX, zy, zz)
+	local x4, y4 = mapCoord(sx + roadSize - carX, sy, sz)
 	love.graphics.setColor(segmentColor(n))
 	love.graphics.polygon('fill',
 		x1 + dsx, y1,
