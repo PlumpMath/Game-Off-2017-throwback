@@ -3,6 +3,7 @@ local carZ, carX, speed
 local level, levelLength
 local dx
 local roadSize = 500
+local roadSegments = 40
 
 function love.load(p)
 	VW = love.graphics.getWidth()
@@ -52,7 +53,7 @@ function love.draw()
 	love.graphics.translate(VW2, -VH)
 	local di = math.floor(carZ)
 	local ibegin = di
-	local iend = 40 + di
+	local iend = roadSegments + di
 	local y1, y2
 	local sx0 = getSegment(di)
 	local sx1 = getSegment(di + 1)
@@ -105,6 +106,12 @@ function grassColor(n)
 	end
 end
 
+function fogColor(n)
+	local r, g, b = 38, 77, 0
+	local a = (n - carZ) / roadSegments * 255
+	return r, g, b, a
+end
+
 function getSegment(n)
 	local x, y, z
 	if n < levelLength then
@@ -146,6 +153,13 @@ function drawSegment(n)
 		x3 + dzx, y3,
 		VW2, y3,
 		VW2, y4
+	)
+	love.graphics.setColor(fogColor(n))
+	love.graphics.polygon('fill',
+		-VW2, y1,
+		-VW2, y2,
+		 VW2, y3,
+		 VW2, y4
 	)
 	return y3, y4
 end
