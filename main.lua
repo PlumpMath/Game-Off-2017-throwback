@@ -37,7 +37,8 @@ function love.update(dt)
 		steer = steerMax
 	end
 	if math.abs(carX) >= roadSize then
-		acc = acc - smooth(speed / speedMax) * 2
+		local f = math.max(0, speed / speedMax + 0.1)
+		acc = acc - pow3out(f) * 2
 	end
 	speed = clamp(speed + acc * dt, 0, speedMax)
 	local speedPercent = speed / speedMax
@@ -66,6 +67,10 @@ end
 
 function smooth(a)
 	return a * a * (3 - 2 * a)
+end
+
+function pow3out(a)
+	return math.pow(a - 1, 3) + 1
 end
 
 function mix(a, b, f)
