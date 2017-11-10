@@ -18,6 +18,19 @@ function love.load(p)
 	levelLength = table.getn(level) / 2
 end
 
+function love.keypressed(key, scancode, isRepeat)
+	if isRepeat == false then
+		if key == 'kp0' then
+			carZ = 1
+			speed = 0
+		elseif key == 'kp+' then
+			carZ = carZ + 1
+		elseif key == 'kp-' then
+			carZ = carZ - 1
+		end
+	end
+end
+
 function love.update(dt)
 	if carZ >= levelLength then
 		return
