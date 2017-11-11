@@ -63,19 +63,18 @@ end
 function love.draw()
 	love.graphics.scale(1, -1)
 	love.graphics.translate(VW2, -VH)
+	love.graphics.setColor(102, 153, 255)
+	love.graphics.rectangle('fill', -VW2, 0, VW, VH)
 	local di = math.floor(carZ)
 	local ibegin = di
 	local iend = roadSegments + di
-	local y1, y2
 	local sx0 = getSegment(di)
 	local sx1 = getSegment(di + 1)
 	local _, f = math.modf(carZ)
 	dx = mix(sx0, sx1, smooth(f))
-	for n = ibegin, iend, 1 do
-		y1, y2 = drawSegment(n)
+	for n = iend, ibegin, -1 do
+		drawSegment(n)
 	end
-	love.graphics.setColor(102, 153, 255)
-	love.graphics.rectangle('fill', -VW2, y1, VW, VH - y2)
 end
 
 function smooth(a)
@@ -179,5 +178,4 @@ function drawSegment(n)
 		 VW2, y3,
 		 VW2, y4
 	)
-	return y3, y4
 end
