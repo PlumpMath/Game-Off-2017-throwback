@@ -101,7 +101,7 @@ function loadLevel(name)
 end
 
 function mapCoord(x, y, z)
-	return x * 1 / (z + 1), (VH2 - y) * z / (z + 1)
+	return x / (z + 1), (VH2 + y) * z / (z + 1)
 end
 
 function segmentColor(n)
