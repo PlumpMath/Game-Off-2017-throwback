@@ -34,10 +34,10 @@ local h = {
 }
 
 straight(c, 9)  flat(h, 9)
-curve(c, 10, 2) hill(h, 10, 12)
-curve(c, 29, 8)  hill(h, 20, -10)
-uncurve(c, 15)  flatten(h, 15)
-straight(c, 16)
+curve(c, 10, 2) hill(h, 10, 64)
+curve(c, 29, 8)  flatten(h, 20)
+uncurve(c, 15)  hill(h, 15, -64)
+straight(c, 16)  flatten(h, 20)
 
 return function()
 	return c, h
