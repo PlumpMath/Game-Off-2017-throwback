@@ -1,6 +1,6 @@
 local VW, VW2, VH, VH2
 local carZ, carX, speed
-local level, levelLength
+local curves, hills, curvesLength, hillsLength, levelLength
 local dx
 local roadSize = 500
 local roadSegments = 40
@@ -14,8 +14,7 @@ function love.load(p)
 	carZ = 1
 	speed = 0
 	dx = 0
-	level = loadLevel('level1')
-	levelLength = table.getn(level) / 2
+	loadLevel('level1')
 end
 
 function love.keypressed(key, scancode, isRepeat)
@@ -96,7 +95,10 @@ function clamp(x, a, b)
 end
 
 function loadLevel(name)
-	return require(name)
+	curves, hills = require(name)()
+	curvesLength = table.getn(curves)
+	hillsLength = table.getn(hills)
+	levelLength = math.max(curvesLength, hillsLength)
 end
 
 function mapCoord(x, y, z)
@@ -127,12 +129,15 @@ end
 
 function getSegment(n)
 	local x, y, z
-	if n < levelLength then
-		x = level[2 * n - 1]
-		y = level[2 * n]
+	if n < curvesLength then
+		x = curves[n]
 	else
-		x = level[2 * levelLength - 1]
-		y = level[2 * levelLength]
+		x = curves[curvesLength]
+	end
+	if n < hillsLength then
+		y = hills[n]
+	else
+		y = hills[hillsLength]
 	end
 	z = n - carZ
 	return x, y, z

@@ -1,7 +1,6 @@
 function straight(r, n)
 	for i = 1, n do
 		table.insert(r, 0)
-		table.insert(r, 0)
 	end
 end
 
@@ -11,7 +10,6 @@ function uncurve(r, n)
 	for i = 1, n do
 		dx = dx + ddx
 		table.insert(r, dx)
-		table.insert(r, 0)
 	end
 end
 
@@ -21,18 +19,26 @@ function curve(r, n, mdx)
 	for i = 1, n do
 		dx = dx + ddx
 		table.insert(r, dx)
-		table.insert(r, 0)
 	end
 end
 
-local r = {
+local flat = straight
+local hill = curve
+local flatten = uncurve
+
+local c = {
+	0, 0,
+}
+local h = {
 	0, 0,
 }
 
-straight(r, 9)
-curve(r, 10, 2)
-curve(r, 29, 8)
-uncurve(r, 15)
-straight(r, 16)
+straight(c, 9)  flat(h, 9)
+curve(c, 10, 2) hill(h, 10, 12)
+curve(c, 29, 8)  hill(h, 20, -10)
+uncurve(c, 15)  flatten(h, 15)
+straight(c, 16)
 
-return r
+return function()
+	return c, h
+end
