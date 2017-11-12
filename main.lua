@@ -104,7 +104,7 @@ function mapCoord(x, y, z)
 	return x / (z + 1), (VH2 + y) * z / (z + 1)
 end
 
-function segmentColor(n)
+function roadColor(n)
 	if n % 2 == 0 then
 		return 96, 96, 96
 	else
@@ -151,7 +151,7 @@ function drawSegment(n)
 	local x2, y2 = mapCoord(zx - roadSize - carX, zy, zz)
 	local x3, y3 = mapCoord(zx + roadSize - carX, zy, zz)
 	local x4, y4 = mapCoord(sx + roadSize - carX, sy, sz)
-	love.graphics.setColor(segmentColor(n))
+	love.graphics.setColor(roadColor(n))
 	love.graphics.polygon('fill',
 		x1 + dsx, y1,
 		x2 + dzx, y2,
