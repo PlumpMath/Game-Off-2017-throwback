@@ -167,25 +167,27 @@ function drawSegment(n)
 		x3 + dzx, y3,
 		x4 + dsx, y4
 	)
-	love.graphics.setColor(laneMarkerColor(n))
-	love.graphics.polygon('fill',
-		x1 + dsx, y1,
-		x2 + dzx, y2,
-		lx2 + dzx, ly2,
-		lx1 + dsx, ly1
-	)
-	love.graphics.polygon('fill',
-		x4 + dsx, y4,
-		x3 + dzx, y3,
-		lx3 + dzx, ly3,
-		lx4 + dsx, ly4
-	)
-	love.graphics.polygon('fill',
-		(x1 + lx4) / 2.0 + dsx, (y1 + ly4) / 2.0,
-		(x2 + lx3) / 2.0 + dzx, (y2 + ly3) / 2.0,
-		(x3 + lx2) / 2.0 + dzx, (y3 + ly2) / 2.0,
-		(x4 + lx1) / 2.0 + dsx, (y4 + ly1) / 2.0
-	)
+	if n % 2 == 1 then
+		love.graphics.setColor(laneMarkerColor(n))
+		love.graphics.polygon('fill',
+			x1 + dsx, y1,
+			x2 + dzx, y2,
+			lx2 + dzx, ly2,
+			lx1 + dsx, ly1
+		)
+		love.graphics.polygon('fill',
+			x4 + dsx, y4,
+			x3 + dzx, y3,
+			lx3 + dzx, ly3,
+			lx4 + dsx, ly4
+		)
+		love.graphics.polygon('fill',
+			(x1 + lx4) / 2.0 + dsx, (y1 + ly4) / 2.0,
+			(x2 + lx3) / 2.0 + dzx, (y2 + ly3) / 2.0,
+			(x3 + lx2) / 2.0 + dzx, (y3 + ly2) / 2.0,
+			(x4 + lx1) / 2.0 + dsx, (y4 + ly1) / 2.0
+		)
+	end
 	love.graphics.setColor(grassColor(n))
 	love.graphics.polygon('fill',
 		 x1 + dsx, y1,
