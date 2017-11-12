@@ -4,6 +4,7 @@ local curves, hills, curvesLength, hillsLength, levelLength
 local dx
 local roadSize = 500
 local roadSegments = 40
+local laneMarkerSize = 25
 
 function love.load(p)
 	VW = love.graphics.getWidth()
@@ -120,6 +121,10 @@ function grassColor(n)
 	end
 end
 
+function laneMarkerColor(n)
+	return 210, 210, 210
+end
+
 function fogColor(n)
 	local r, g, b = 38, 77, 0
 	local a = (n - carZ) / roadSegments * 255
@@ -151,12 +156,35 @@ function drawSegment(n)
 	local x2, y2 = mapCoord(zx - roadSize - carX, zy, zz)
 	local x3, y3 = mapCoord(zx + roadSize - carX, zy, zz)
 	local x4, y4 = mapCoord(sx + roadSize - carX, sy, sz)
+	local lx1, ly1 = mapCoord(sx - roadSize - carX + laneMarkerSize, sy, sz)
+	local lx2, ly2 = mapCoord(zx - roadSize - carX + laneMarkerSize, zy, zz)
+	local lx3, ly3 = mapCoord(zx + roadSize - carX - laneMarkerSize, zy, zz)
+	local lx4, ly4 = mapCoord(sx + roadSize - carX - laneMarkerSize, sy, sz)
 	love.graphics.setColor(roadColor(n))
 	love.graphics.polygon('fill',
 		x1 + dsx, y1,
 		x2 + dzx, y2,
 		x3 + dzx, y3,
 		x4 + dsx, y4
+	)
+	love.graphics.setColor(laneMarkerColor(n))
+	love.graphics.polygon('fill',
+		x1 + dsx, y1,
+		x2 + dzx, y2,
+		lx2 + dzx, ly2,
+		lx1 + dsx, ly1
+	)
+	love.graphics.polygon('fill',
+		x4 + dsx, y4,
+		x3 + dzx, y3,
+		lx3 + dzx, ly3,
+		lx4 + dsx, ly4
+	)
+	love.graphics.polygon('fill',
+		(x1 + lx4) / 2.0 + dsx, (y1 + ly4) / 2.0,
+		(x2 + lx3) / 2.0 + dzx, (y2 + ly3) / 2.0,
+		(x3 + lx2) / 2.0 + dzx, (y3 + ly2) / 2.0,
+		(x4 + lx1) / 2.0 + dsx, (y4 + ly1) / 2.0
 	)
 	love.graphics.setColor(grassColor(n))
 	love.graphics.polygon('fill',
