@@ -42,7 +42,7 @@ function love.update(dt)
 	if love.keyboard.isDown('up') then
 		acc = 1
 	elseif love.keyboard.isDown('down') then
-		acc = -1
+		acc = -2
 	end
 	if love.keyboard.isDown('left') then
 		steer = -steerMax
