@@ -54,6 +54,9 @@ function love.update(dt)
 		local f = math.max(0, speed / speedMax + 0.1)
 		acc = acc - pow3out(f) * 2
 	end
+	if math.abs(carX) > roadSize * 1.5 then
+		carX = roadSize * 1.5 * sign(carX)
+	end
 	speed = clamp(speed + acc * dt, 0, speedMax)
 	local speedPercent = speed / speedMax
 	local offset = dt * speed * dx * dx
@@ -75,6 +78,16 @@ function love.draw()
 	dx = mix(sx0, sx1, smooth(f))
 	for n = iend, ibegin, -1 do
 		drawSegment(n)
+	end
+end
+
+function sign(x)
+	if x < 0 then
+		return -1
+	elseif x > 0 then
+		return 1
+	else 
+		return 0
 	end
 end
 
