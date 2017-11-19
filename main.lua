@@ -40,7 +40,7 @@ function love.update(dt)
 	local speedMax = 15
 	local steerMax = 1000
 	if love.keyboard.isDown('up') then
-		acc = 1
+		acc = accFunc(speed)
 	elseif love.keyboard.isDown('down') then
 		acc = -2
 	end
@@ -76,6 +76,10 @@ function love.draw()
 	for n = iend, ibegin, -1 do
 		drawSegment(n)
 	end
+end
+
+function accFunc(speed)
+	return -1.352002 + (2.838528 + 1.352002) / (1 + math.pow(speed / 11.35162, 1.495932))
 end
 
 function smooth(a)
