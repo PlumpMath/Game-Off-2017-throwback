@@ -91,7 +91,7 @@ function love.draw()
 	if carZ >= levelLength then
 		love.graphics.setColor(255, 255, 255)
 		local s = string.format('CONGRATULATIONS!\nTime: %.1f s', t1 - t0)
-		love.graphics.printf(s, -VW2, VH2, VW, 'center', 0, 1, -1)
+		love.graphics.printf(s, -VW2, VH * 0.9, VW, 'center', 0, 1, -1)
 	end
 end
 
