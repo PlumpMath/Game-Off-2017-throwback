@@ -62,6 +62,9 @@ function love.update(dt)
 	if math.abs(carX) > roadSize * 1.5 then
 		carX = roadSize * 1.5 * sign(carX)
 	end
+	if math.abs(steer) > 1 then
+		acc = acc * 0.97
+	end
 	local c = 0.86
 	local x = ((c - 1) * clamp(dt, 0, 1) + 1)
 	speed = speed * x
