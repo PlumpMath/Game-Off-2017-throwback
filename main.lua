@@ -5,6 +5,7 @@ local dx
 local roadSize = 500
 local roadSegments = 40
 local laneMarkerSize = 25
+local font
 
 function love.load(p)
 	VW = love.graphics.getWidth()
@@ -16,6 +17,8 @@ function love.load(p)
 	speed = 0
 	dx = 0
 	loadLevel('level1')
+	font = love.graphics.newFont(48)
+	love.graphics.setFont(font)
 end
 
 function love.keypressed(key, scancode, isRepeat)
@@ -80,9 +83,8 @@ function love.draw()
 		drawSegment(n)
 	end
 	if carZ >= levelLength then
-		local s = 4
 		love.graphics.setColor(255, 255, 255)
-		love.graphics.printf('CONGRATULATIONS!', -VW2, VH2, VW / s, 'center', 0, s, -s)
+		love.graphics.printf('CONGRATULATIONS!', -VW2, VH2, VW, 'center', 0, 1, -1)
 	end
 end
 
