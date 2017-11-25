@@ -38,7 +38,7 @@ function love.update(dt)
 	if carZ >= levelLength then
 		return
 	end
-	local acc = 0
+	local acc = -0.666
 	local steer = 0
 	local speedMax = 15
 	local steerMax = 1000
@@ -60,6 +60,9 @@ function love.update(dt)
 	if math.abs(carX) > roadSize * 1.5 then
 		carX = roadSize * 1.5 * sign(carX)
 	end
+	local c = 0.86
+	local x = ((c - 1) * clamp(dt, 0, 1) + 1)
+	speed = speed * x
 	speed = clamp(speed + acc * dt, 0, speedMax)
 	local speedPercent = speed / speedMax
 	local offset = dt * speed * dx * math.abs(dx)
