@@ -79,6 +79,11 @@ function love.draw()
 	for n = iend, ibegin, -1 do
 		drawSegment(n)
 	end
+	if carZ >= levelLength then
+		local s = 4
+		love.graphics.setColor(255, 255, 255)
+		love.graphics.printf('CONGRATULATIONS!', -VW2, VH2, VW / s, 'center', 0, s, -s)
+	end
 end
 
 function sign(x)
