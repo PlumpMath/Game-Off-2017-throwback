@@ -43,7 +43,7 @@ function love.update(dt)
 	local acc = -0.666
 	local steer = 0
 	local speedMax = 16
-	local steerMax = 1000
+	local steerMax = 1200
 	if love.keyboard.isDown('up') or love.keyboard.isDown('space') then
 		acc = accFunc(speed)
 	elseif love.keyboard.isDown('down') then
