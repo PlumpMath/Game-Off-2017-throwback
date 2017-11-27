@@ -7,6 +7,7 @@ local roadSegments = 40
 local laneMarkerSize = 25
 local font
 local t0, t1
+local debug = false
 
 function love.load(p)
 	VW = love.graphics.getWidth()
@@ -24,7 +25,7 @@ function love.load(p)
 end
 
 function love.keypressed(key, scancode, isRepeat)
-	if isRepeat == false then
+	if debug and isRepeat == false then
 		if key == 'kp0' then
 			carZ = 1
 			speed = 0
